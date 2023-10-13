@@ -1,12 +1,12 @@
 import { useState, useEffect, ChangeEvent } from 'react'
-import { optionType } from '../types'
+import { forecastType, optionType } from '../types'
 
 const useForecast = () => {
   const API_KEY: string = process.env.REACT_APP_WEATHER_API_KEY as string
   const [options, setOptions] = useState<[]>([])
   const [city, setCity] = useState<optionType | null>(null)
   const [place, setPlace] = useState<string>('')
-  const [forecast, setForecast] = useState<optionType | null>(null)
+  const [forecast, setForecast] = useState<forecastType | null>(null)
 
   const getSearchOptions = (search: string) => {
     fetch(
@@ -36,7 +36,13 @@ const useForecast = () => {
       `https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&units=metric&appid=${API_KEY}`
     ).then((res) => {
       if (res.ok) {
-        res.json().then((data) => setForecast(data))
+        res.json().then((data) => {
+          const forecastData = {
+            ...data.city,
+            list: data.list.splice(16),
+          }
+          setForecast(forecastData)
+        })
       }
     })
   }
