@@ -1,5 +1,5 @@
-import { ChangeEvent } from "react"
-import { optionType } from "../types"
+import { ChangeEvent } from 'react'
+import { optionType } from '../types'
 
 type Props = {
   term: string
@@ -46,7 +46,7 @@ const Search = ({
                   className="text-left text-sm w-full hover:bg-zinc-700 hover:text-white px-1 py-1 curser-pointer"
                   onClick={() => onOptionSelect(option)}
                 >
-                  {option.name}
+                  {option.name} {option.country}
                 </button>
               </li>
             ))}
